@@ -12,6 +12,11 @@ type PreloadProps = Parameters<typeof Preload>[0];
 interface Props extends SEOProps, PreloadProps {}
 
 const { preload, ...seo } = Astro.props;
+
+function prueba() {
+  console.log("prueba");
+}
+prueba();
 ---
 
 <!doctype html>
@@ -20,6 +25,7 @@ const { preload, ...seo } = Astro.props;
     <SEO {...seo} />
     <Preload {preload} />
     <ViewTransitions />
+    <script is:inline src="/toggle-theme.js" async></script>
   </head>
 
   <body>

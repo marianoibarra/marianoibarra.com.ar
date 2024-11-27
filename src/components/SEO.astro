@@ -33,7 +33,6 @@ const defaultKeywords: string[] = [
 const keywords = Array.from(new Set([...defaultKeywords, ..._keywords])).join(", ");
 
 // TODO: Add image fallback
-// TODO: Add theme-color
 ---
 
 <!-- General tags -->
@@ -42,7 +41,7 @@ const keywords = Array.from(new Set([...defaultKeywords, ..._keywords])).join(",
 <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
 <link rel="canonical" href={canonical} />
 <meta name="generator" content={Astro.generator} />
-<!-- <meta name="theme-color" content="#000000" /> -->
+<meta name="theme-color" content="" />
 
 <!-- Meta tags -->
 <title>{title}</title>
