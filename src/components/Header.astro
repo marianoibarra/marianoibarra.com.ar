@@ -1,0 +1,28 @@
+---
+const { pathname } = Astro.url;
+
+const navlinks = [
+  { href: "/", text: "Inicio" },
+  { href: "/about", text: "About" },
+  { href: "/blog", text: "Blog" },
+  { href: "/contact", text: "Contacto" },
+];
+
+const isActive = (href: string): boolean => (pathname.lastIndexOf("/") > 0 ? pathname.startsWith(href) : pathname === href);
+---
+
+<header class="h-12 w-full grid grid-cols-[140px_auto_140px] items-center max-w-8xl mx-auto">
+  <a href="/">Mariano Ibarra</a>
+  <nav class="grow flex justify-center gap-4">
+    {
+      navlinks.map(({ href, text }) => (
+        <a {href} class="app-header-nav" data-active={isActive(href)}>
+          {text}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="justify-self-end">
+    <button id="toggle-theme">toggle</button>
+  </div>
+</header>

@@ -1,0 +1,12 @@
+---
+import type { Preload } from "types";
+
+interface Props {
+  preload?: Preload[];
+}
+const { preload } = Astro.props;
+---
+
+<!-- <link rel="preload" as="font" href="/fonts/Inter-roman.var.woff2" type="font/woff2" crossorigin /> -->{
+  preload?.map(({ as, href, type, rel = "preload", crossorigin }) => <link {rel} {href} {as} {type} {crossorigin} />)
+}
