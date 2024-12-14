@@ -12,11 +12,6 @@ type PreloadProps = Parameters<typeof Preload>[0];
 interface Props extends SEOProps, PreloadProps {}
 
 const { preload, ...seo } = Astro.props;
-
-function prueba() {
-  console.log("prueba");
-}
-prueba();
 ---
 
 <!doctype html>

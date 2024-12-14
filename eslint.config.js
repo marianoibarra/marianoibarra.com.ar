@@ -1,16 +1,13 @@
 import js from "@eslint/js";
-import masterCssEslint from "@master/eslint-config-css/flat";
 import astroParser from "astro-eslint-parser";
 import eslintPluginAstro from "eslint-plugin-astro";
 import globals from "globals";
-import tseslist from "typescript-eslint";
+import tseslint from "typescript-eslint";
 
-/** @type { import("eslint").Linter.Config[] } */
 export default [
   js.configs.recommended,
-  ...tseslist.configs.recommended,
+  ...tseslint.configs.recommended,
   ...eslintPluginAstro.configs.recommended,
-  masterCssEslint,
   {
     languageOptions: {
       globals: {
@@ -27,6 +24,18 @@ export default [
         parser: "@typescript-eslint/parser",
         extraFileExtensions: [".astro"],
       },
+    },
+  },
+  {
+    files: ["tailwind.config.cjs", "**/*.d.ts"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/triple-slash-reference": "off",
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-unused-expressions": "off",
     },
   },
   {
