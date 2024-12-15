@@ -1,3 +1,6 @@
+import containerQueries from '@tailwindcss/container-queries';
+import typography from '@tailwindcss/typography';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -5,54 +8,69 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		fontFamily: {
-			sans: ["Nunito", ...require('tailwindcss/defaultTheme').fontFamily.sans],
-			mono: ["FiraCode", ...require('tailwindcss/defaultTheme').fontFamily.mono],
+			sans: ["Nunito", ...defaultTheme.fontFamily.sans],
+			mono: ["FiraCode", ...defaultTheme.fontFamily.mono],
 		},
 		extend: {
 			textColor: {
-				theme: {
-					base: withOpacity("--color-foreground"),
-					primary: withOpacity("--color-primary"),
-					accent: withOpacity("--color-accent"),
-					inverted: withOpacity("--color-background"),
+				app: {
+					/** primary color, links, buttons */
+					primary: withOpacity("--text-primary"),
+					/** accent color, links, buttons */
+					accent: withOpacity("--text-accent"),
+					/**	page titles, subheadings, emphasized fields */
+					strong: withOpacity("--text-strong"),
+					/**	body text, descriptions, and general content */
+					neutral: withOpacity("--text-neutral"),
+					/** light color, icons */
+					light: withOpacity("--text-light"),
+					/** lighter color, icons */
+					lighter: withOpacity("--text-lighter"),
+					/** dim color, placeholder, disabled text */
+					lightest: withOpacity("--text-lightest"),
+					/**	inverted color of the foreground */
+					invert: withOpacity("--text-invert"),
 				}
 			},
 			backgroundColor: {
-				theme: {
-					base: withOpacity("--color-background"),
-					primary: withOpacity("--color-primary"),
-					accent: withOpacity("--color-accent"),
-					inverted: withOpacity("--color-foreground"),
-					card: withOpacity("--color-card"),
-					"card-muted": withOpacity("--color-card-muted"),
+				app: {
+					base: withOpacity("--bg-base"),
+					accent: withOpacity("--text-accent"),
+					card: withOpacity("--bg-card"),
+					"card-muted": withOpacity("--bg-card-muted"),
 				}
 			},
 			outlineColor: {
-				theme: {
-					base: withOpacity("--color-border"),
-					fill: withOpacity("--color-foreground"),
-					primary: withOpacity("--color-accent"),
-					accent: withOpacity("--color-accent"),
+				app: {
+					primary: withOpacity("--text-primary"),
+					accent: withOpacity("--text-accent"),
+					neutral: withOpacity("--frame"),
+					light: "rgba(var(--frame-light), 0.2)",
+					lighter: "rgba(var(--frame-lighter), 0.16)",
+					lightest: "rgba(var(--frame-lightest), 0.12)",
 				}
 			},
 			borderColor: {
-				theme: {
-					base: withOpacity("--color-border"),
-					fill: withOpacity("--color-foreground"),
-					primary: withOpacity("--color-accent"),
-					accent: withOpacity("--color-accent"),
+				app: {
+					primary: withOpacity("--text-primary"),
+					accent: withOpacity("--text-accent"),
+					neutral: withOpacity("--frame"),
+					light: "rgba(var(--frame), 0.2)",
+					lighter: "rgba(var(--frame), 0.16)",
+					lightest: "rgba(var(--frame), 0.12)",
 				},
 			},
 			stroke: {
-				theme: {
-					accent: withOpacity("--color-accent")
+				app: {
+					accent: withOpacity("--text-accent")
 				}
 			},
 			fill: {
-        theme: {
-          base: withOpacity("--color-foreground"),
-          primary: withOpacity("--color-primary"),
-          accent: withOpacity("--color-accent"),
+        app: {
+          neutral: withOpacity("--text-neutral"),
+          strong: withOpacity("--text-strong"),
+          primary: withOpacity("--text-primary"),
+          accent: withOpacity("--text-accent"),
         },
         transparent: "transparent",
       },
@@ -62,8 +80,8 @@ export default {
 		},
 	},
 	plugins: [
-		require('@tailwindcss/typography'),
-		require('@tailwindcss/container-queries'),
+		typography,
+		containerQueries,
 	],
 }
 

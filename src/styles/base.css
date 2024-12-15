@@ -1,0 +1,40 @@
+@layer base {
+  :root,
+  html[data-theme="dark"] {
+    --bg-base: 13, 19, 25;
+    --bg-card: 52, 63, 96;
+    --bg-card-muted: 138, 51, 2;
+
+    --text-primary: 0, 108, 172;
+    --text-accent: 0, 228, 212;
+    --text-strong: 239, 238, 240;
+    --text-neutral: 162, 161, 163;
+    --text-light: 137, 136, 138;
+    --text-lighter: 115, 114, 116;
+    --text-lightest: 88, 87, 89;
+    --text-invert: 0, 0, 0;
+
+    --frame: 162, 161, 163;
+  }
+
+  html[data-theme="light"] {
+    --bg-base: 251, 254, 251;
+    --bg-card: 230, 230, 230;
+    --bg-card-muted: 205, 205, 205;
+
+    --text-primary: 0, 108, 172;
+    --text-accent: 0, 228, 212;
+    --text-strong: 24, 32, 48;
+    --text-neutral: 55, 69, 93;
+    --text-light: 95, 115, 149;
+    --text-lighter: 124, 140, 171;
+    --text-lightest: 159, 171, 198;
+    --text-invert: 255, 255, 255;
+
+    --frame: 69, 85, 114;
+  }
+
+  body {
+    @apply flex min-h-[100svh] flex-col bg-app-base font-sans text-app-neutral selection:bg-app-accent/70 selection:text-app-invert;
+  }
+}

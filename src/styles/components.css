@@ -1,0 +1,8 @@
+@layer components {
+  .app-header-nav {
+    @apply text-app-neutral mx-1 select-none transition-colors duration-200 ease-in-out;
+    &:is(:hover, :active, [data-active="true"]) {
+      @apply text-app-strong font-medium;
+    }
+  }
+}

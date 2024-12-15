@@ -1,10 +1,10 @@
 ---
-import "@styles/global.css";
+import "@styles/main.css";
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 import Preload from "@components/Preload.astro";
 import SEO from "@components/SEO.astro";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 type SEOProps = Parameters<typeof SEO>[0];
 type PreloadProps = Parameters<typeof Preload>[0];
@@ -19,13 +19,13 @@ const { preload, ...seo } = Astro.props;
   <head>
     <SEO {...seo} />
     <Preload {preload} />
-    <ViewTransitions />
+    <ClientRouter />
     <script is:inline src="/toggle-theme.js" async></script>
   </head>
 
   <body>
     <Header />
-    <main>
+    <main class="mx-auto w-full max-w-8xl flex-1 px-4 py-2.5 sm:px-6 md:px-8">
       <slot />
     </main>
     <Footer />

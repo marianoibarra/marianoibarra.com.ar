@@ -11,18 +11,23 @@ const navlinks = [
 const isActive = (href: string): boolean => (pathname.lastIndexOf("/") > 0 ? pathname.startsWith(href) : pathname === href);
 ---
 
-<header class="h-12 w-full grid grid-cols-[140px_auto_140px] items-center max-w-8xl mx-auto">
-  <a href="/">Mariano Ibarra</a>
-  <nav class="grow flex justify-center gap-4">
-    {
-      navlinks.map(({ href, text }) => (
-        <a {href} class="app-header-nav" data-active={isActive(href)}>
-          {text}
-        </a>
-      ))
-    }
-  </nav>
-  <div class="justify-self-end">
-    <button id="toggle-theme">toggle</button>
+<header class="h-14 w-full border-b border-b-app-lightest">
+  <div class="mx-auto grid h-full w-full max-w-8xl grid-cols-[150px_auto_150px] items-center px-4 sm:px-6 md:px-8">
+    <a href="/" class="font-bold text-app-strong *:text-xl">
+      <span class="inline">Mariano</span>
+      <span class="inline">Ibarra</span>
+    </a>
+    <nav class="flex grow justify-center gap-4">
+      {
+        navlinks.map(({ href, text }) => (
+          <a {href} class="app-header-nav" data-active={isActive(href)}>
+            {text}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="justify-self-end">
+      <button id="toggle-theme">toggle</button>
+    </div>
   </div>
 </header>
