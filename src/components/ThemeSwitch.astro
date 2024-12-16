@@ -1,0 +1,94 @@
+---
+import SunIcon from "@assets/sun.svg";
+import MoonIcon from "@assets/moon.svg";
+import SystemIcon from "@assets/system.svg";
+
+declare global {
+  interface Window {
+    setThemePreference: (theme: string) => void;
+  }
+  interface DocumentEventMap {
+    storage: StorageEvent;
+  }
+}
+---
+
+<button id="theme-switch" popovertarget="theme-dropdown" class="flex-center">
+  <SunIcon id="sun-icon" class="stroke-app-primary fill-app-primary/25" stroke-width="1.75" size={28} />
+  <MoonIcon id="moon-icon" class="stroke-app-primary fill-app-primary/25" stroke-width="1.75" size={24} />
+</button>
+
+<div
+  id="theme-dropdown"
+  popover
+  role="listbox"
+  aria-orientation="vertical"
+  class="m-0 flex h-fit w-fit -translate-x-full translate-y-3 flex-col divide-y divide-app-light rounded-lg bg-app-card p-0 py-2 text-sm text-app-neutral shadow-xl *:h-9 *:w-auto *:px-4 *:text-left"
+>
+  <label class="hover:bg-app-invert/5 flex cursor-pointer items-center justify-start gap-2 transition-colors">
+    <input class="peer/light hidden" type="radio" name="theme" value="light" onclick="window.setThemePreference('light')" />
+    <SunIcon class="stroke-app-neutral peer-checked/light:stroke-app-primary -m-0.5 shrink-0" size={24} />
+    <span class="font-medium text-app-strong peer-checked/light:font-bold peer-checked/light:text-app-primary"> Claro </span>
+  </label>
+  <label class="hover:bg-app-invert/5 flex cursor-pointer items-center justify-start gap-2 transition-colors">
+    <input class="peer/dark hidden" type="radio" name="theme" value="dark" onclick="window.setThemePreference('dark')" />
+    <MoonIcon class="stroke-app-neutral peer-checked/dark:stroke-app-primary shrink-0" size={20} />
+    <span class="font-medium text-app-strong peer-checked/dark:font-bold peer-checked/dark:text-app-primary"> Oscuro </span>
+  </label>
+  <label class="hover:bg-app-invert/5 flex cursor-pointer items-center justify-start gap-2 transition-colors">
+    <input class="peer/system hidden" type="radio" name="theme" value="system" onclick="window.setThemePreference('system')" />
+    <SystemIcon class="stroke-app-neutral peer-checked/system:stroke-app-primary shrink-0" size={20} />
+    <span class="font-medium text-app-strong peer-checked/system:font-bold peer-checked/system:text-app-primary"> Sistema </span>
+  </label>
+</div>
+
+<script>
+  import { $ } from "helpers/selector";
+
+  const updateSelectedOption = (theme: string) => {
+    const option = $<HTMLInputElement>(`input[name=theme][value="${theme}"]`);
+    if (option) option.checked = true;
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    const theme = localStorage.getItem("theme-preference") || "system";
+    updateSelectedOption(theme);
+
+    const $popover = $<HTMLElement>("#theme-dropdown");
+    if ($popover) {
+      $popover.addEventListener("click", () => $popover.hidePopover());
+    }
+
+    document.addEventListener("storage", event => {
+      if (event.key === "theme-preference") {
+        const theme = event.newValue || "system";
+        updateSelectedOption(theme);
+      }
+    });
+  });
+</script>
+
+<style>
+  html[data-theme="light"] #sun-icon,
+  html[data-theme="dark"] #moon-icon {
+    @apply inline;
+  }
+  html[data-theme="dark"] #sun-icon,
+  html[data-theme="light"] #moon-icon {
+    @apply hidden;
+  }
+
+  #theme-switch {
+    anchor-name: --theme-switch;
+  }
+
+  #theme-dropdown {
+    position-anchor: --theme-switch;
+    top: anchor(--theme-switch bottom);
+    left: anchor(--theme-switch right);
+
+    &:not(:popover-open):not(dialog[open]) {
+      display: none;
+    }
+  }
+</style>

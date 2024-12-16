@@ -4,6 +4,7 @@
     --bg-base: 13, 19, 25;
     --bg-card: 52, 63, 96;
     --bg-card-muted: 138, 51, 2;
+    --bg-invert: 255, 255, 255;
 
     --text-primary: 0, 108, 172;
     --text-accent: 0, 228, 212;
@@ -21,6 +22,7 @@
     --bg-base: 251, 254, 251;
     --bg-card: 230, 230, 230;
     --bg-card-muted: 205, 205, 205;
+    --bg-invert: 0, 0, 0;
 
     --text-primary: 0, 108, 172;
     --text-accent: 0, 228, 212;

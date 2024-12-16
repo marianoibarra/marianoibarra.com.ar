@@ -1,30 +1,67 @@
-const primaryColorScheme = "dark";
+const defaultPreference = "system"; // "light" or "dark" or "system"
 
-// Get theme data from local storage
-const currentTheme = localStorage.getItem("theme");
+let themePreference = getPreferTheme();
+reflectPreference();
 
+//#region Subscripción a eventos
+
+// Se suscribe al evento de carga de la ventana para reflejar la preferencia de tema
+window.onload = () => {
+  function setThemeFeature() {
+    reflectPreference();
+  }
+
+  setThemeFeature();
+
+  document.addEventListener("astro:after-swap", setThemeFeature);
+};
+
+// Se suscribe al evento de cambio de tema del sistema y se aplica si la preferencia es "system"
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+  if (themePreference === "system") reflectPreference();
+});
+
+/**
+ * Cambia el tema de preferencia, guardando el valor en localStorage y reflejando el cambio en el DOM
+ * @param {'system' | 'light' | 'dark'} theme
+ */
+window.setThemePreference = theme => {
+  themePreference = theme;
+  localStorage.setItem("theme-preference", themePreference);
+  reflectPreference();
+};
+
+//#endregion
+
+//#region Funciones auxiliares
+
+/**
+ * Obtiene la preferencia de tema actual, si no existe en localStorage, devuelve la preferencia por defecto
+ * @returns {'system' | 'light' | 'dark'} Preferencia de tema actual
+ */
 function getPreferTheme() {
-  // return theme value in local storage if it is set
+  const currentTheme = localStorage.getItem("theme-preference");
   if (currentTheme) return currentTheme;
 
-  // return primary color scheme if it is set
-  if (primaryColorScheme) return primaryColorScheme;
+  return defaultPreference;
+}
 
-  // return user device's prefer color scheme
+/**
+ * Obtiene la preferencia de tema del sistema
+ * @returns {'dark' | 'light'} Preferencia de tema del sistema
+ */
+function getSystemPreference() {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
-let themeValue = getPreferTheme();
-
-function setPreference() {
-  localStorage.setItem("theme", themeValue);
-  reflectPreference();
-}
-
+/**
+ * Aplica la preferencia de tema en el DOM
+ */
 function reflectPreference() {
-  document.firstElementChild.setAttribute("data-theme", themeValue);
+  const colorScheme = themePreference === "system" ? getSystemPreference() : themePreference === "dark" ? "dark" : "light";
+  document.firstElementChild.setAttribute("data-theme", colorScheme);
 
-  document.querySelector("#toggle-theme")?.setAttribute("aria-label", themeValue);
+  document.querySelector("#toggle-theme")?.setAttribute("aria-label", colorScheme);
 
   // Get a reference to the body element
   const body = document.body;
@@ -42,29 +79,4 @@ function reflectPreference() {
   }
 }
 
-// set early so no page flashes / CSS is made aware
-reflectPreference();
-
-window.onload = () => {
-  function setThemeFeature() {
-    // set on load so screen readers can get the latest value on the button
-    reflectPreference();
-
-    // now this script can find and listen for clicks on the control
-    document.querySelector("#toggle-theme")?.addEventListener("click", () => {
-      themeValue = themeValue === "light" ? "dark" : "light";
-      setPreference();
-    });
-  }
-
-  setThemeFeature();
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", setThemeFeature);
-};
-
-// sync with system changes
-window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches: isDark }) => {
-  themeValue = isDark ? "dark" : "light";
-  setPreference();
-});
+//#endregion

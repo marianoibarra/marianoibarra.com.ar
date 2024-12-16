@@ -38,6 +38,7 @@ export default {
 					accent: withOpacity("--text-accent"),
 					card: withOpacity("--bg-card"),
 					"card-muted": withOpacity("--bg-card-muted"),
+					invert: withOpacity("--bg-invert"),
 				}
 			},
 			outlineColor: {
@@ -62,7 +63,10 @@ export default {
 			},
 			stroke: {
 				app: {
-					accent: withOpacity("--text-accent")
+					neutral: withOpacity("--text-neutral"),
+          strong: withOpacity("--text-strong"),
+          primary: withOpacity("--text-primary"),
+          accent: withOpacity("--text-accent"),
 				}
 			},
 			fill: {

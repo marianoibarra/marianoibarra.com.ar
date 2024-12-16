@@ -7,4 +7,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   site: "https://marianoibarra.com",
   integrations: [tailwind()],
+  experimental: {
+    svg: true,
+  },
 });

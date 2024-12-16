@@ -1,4 +1,6 @@
 ---
+import ThemeSwitch from "./ThemeSwitch.astro";
+
 const { pathname } = Astro.url;
 
 const navlinks = [
@@ -27,7 +29,7 @@ const isActive = (href: string): boolean => (pathname.lastIndexOf("/") > 0 ? pat
       }
     </nav>
     <div class="justify-self-end">
-      <button id="toggle-theme">toggle</button>
+      <ThemeSwitch />
     </div>
   </div>
 </header>

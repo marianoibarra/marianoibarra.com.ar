@@ -9,3 +9,4 @@
 
 /* Utilities Tailwind CSS */
 @import "tailwindcss/utilities";
+@import "./utilities.css";
